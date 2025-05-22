@@ -3,6 +3,14 @@ from PIL import Image
 import torch
 from torch.utils.data import Dataset
 import torchvision.transforms as transforms
+import os
+import torch
+from torch.utils.data import Dataset
+from PIL import Image
+import numpy as np
+
+from albumentations.pytorch import ToTensorV2
+
 
 class LungDataset(Dataset):
     def __init__(self, image_dir, mask_dir, detection_dir, transform=None, task='detection'):
@@ -48,15 +56,18 @@ class LungDataset(Dataset):
     def __getitem__(self, idx):
         record = self.data[idx]
         image = Image.open(record['image']).convert('L')
+        image = np.array(image)
         mask = Image.open(record['mask']).convert('L') 
+        mask = np.array(mask, dtype=np.float32)
         boxes = record['boxes']
 
         if self.transform:
-            image = self.transform(image)
-            mask = self.transform(mask)
+            transformed = self.transform(image=image, mask=mask)
+            image = transformed["image"]
+            mask = transformed["mask"]
         else:
-            image = transforms.ToTensor()(image)
-            mask = transforms.ToTensor()(mask)
+            image = ToTensorV2()(image)
+            mask = ToTensorV2()(mask)
 
         if self.task == 'detection':
             target = {'boxes': torch.tensor(boxes, dtype=torch.float32)}
