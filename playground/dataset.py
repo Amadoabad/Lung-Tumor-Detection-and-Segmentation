@@ -59,6 +59,7 @@ class LungDataset(Dataset):
         image = np.array(image)
         mask = Image.open(record['mask']).convert('L') 
         mask = np.array(mask, dtype=np.float32)
+        mask[mask == 255.0] = 1.0
         boxes = record['boxes']
 
         if self.transform:
