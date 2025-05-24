@@ -113,4 +113,3 @@ The model achieves the following performance metrics:
 
 - The Mask R-CNN implementation is based on torchvision's implementation
 - Dataset provided by [samamohamed29 on Kaggle](https://www.kaggle.com/datasets/samamohamed29/lungtumor)
-```
