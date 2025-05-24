@@ -118,11 +118,6 @@ visualize_segmentation_overlay(original_image, predicted_mask)
 
 See [train/losses.py](train/losses.py) for details and usage.
 
-## Data & Augmentation
-
-- Data loading and batching are handled by [train/utils.py](train/utils.py), using a custom `LungDataset` class (see `datasets/lung_dataset.py`).
-- Default transformation: normalization and conversion to PyTorch tensors. Easily extendable using Albumentations.
-
 ## Notes
 
 - Temporary and output files are ignored via `.gitignore` (see [`.gitignore`](.gitignore) for details).
