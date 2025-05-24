@@ -1,58 +1,69 @@
-# Lung Tumor Detection and Segmentation using Mask R-CNN
+Here’s an **edited version** of your `README.md` that reflects the **actual directory structure** shown in your screenshot, adds **clarity**, and uses consistent formatting and filenames (e.g., `Mask_Rcnn.py` instead of `Mask-Rcnn.py`, corrects `image.png`, and includes the new `main.py` command-line tool):
+
+---
+
+# 🫁 Lung Tumor Detection and Segmentation using Mask R-CNN
 
 ![Example Prediction](image.png)
 
-This repository contains a PyTorch implementation of Mask R-CNN for detecting and segmenting lung tumors in medical images. The model is trained to both localize tumors with bounding boxes and provide pixel-level segmentation masks.
+This repository contains a PyTorch implementation of **Mask R-CNN** for detecting and segmenting **lung tumors** in medical images. The model is capable of **bounding box detection** and **pixel-level segmentation** for tumors in CT scan slices.
 
-## Features
+---
 
-- Mask R-CNN implementation with ResNet-50 backbone
-- Custom dataset loader for lung tumor images and annotations
-- Training and evaluation scripts
-- Visualization tools for model predictions
-- Both instance-level and image-level evaluation metrics
+## 🚀 Features
 
-## Repository Structure
+* ✅ Mask R-CNN with ResNet-50 backbone
+* 🧠 Custom dataset class for lung tumor segmentation
+* 🏋️‍♂️ Training and evaluation scripts
+* 🖼️ Single-image visualization and inference
+* 📊 Evaluation with Dice Score, Precision, Recall, and F1 Score
+
+---
+
+## 📁 Repository Structure
 
 ```
 lung-tumor-detection-and-segmentation/
-├── datasets/
-│   ├── __init__.py
-│   └── lung_dataset.py          # Custom dataset class
 ├── models/
 │   ├── __init__.py
-│   └── Mask-Rcnn.py             # Mask R-CNN model implementation
+│   └── Mask_Rcnn.py               # Mask R-CNN model architecture
 ├── playground/
-│   ├── __pycache__/
-│   └── playground.ipynb         # Jupyter notebook for experimentation
+│   └── playground.ipynb           # Jupyter experiments
 ├── train/
 │   ├── __init__.py
-│   ├── predict_inference.py     # Inference script
-│   └── train.py                 # Training script
-├── .gitignore
+│   ├── config.py                  # Configuration settings
+│   ├── evaluate.py                # Evaluation logic
+│   ├── predict_inference.py       # Inference function
+│   └── train.py                   # Training script
+├── main.py                        # Run inference via CLI
+├── requirements.txt               # Python dependencies
 ├── README.md
-├── requirements.txt             # Python dependencies
-└── example_prediction.png       # Example output
+├── .gitignore
+├── example_visualization.png      # Example visual output
+├── image.png                      # Example prediction image
+└── requirements.txt
 ```
 
-## Requirements
+---
 
-- Python 3.7+
-- PyTorch 1.8+
-- torchvision
-- albumentations
-- opencv-python
-- matplotlib
-- numpy
-- tqdm
-- kagglehub (for dataset access)
+## 🔧 Requirements
 
-## Installation
+Install dependencies from the `requirements.txt` file:
 
-1. Install the required packages:
 ```bash
 pip install -r requirements.txt
 ```
+
+Required libraries include:
+
+* `torch`, `torchvision`
+* `albumentations`
+* `opencv-python`
+* `matplotlib`
+* `numpy`
+* `tqdm`
+
+---
 
 ## Training the Model
 
@@ -62,54 +73,76 @@ To train the Mask R-CNN model:
 python train/train.py
 ```
 
-Training parameters can be adjusted in the `train.py` script:
-- Batch size
-- Number of epochs
-- Learning rate
-- Model save path
+You can configure:
 
-## Evaluation
+* Batch size
+* Epochs
+* Learning rate
+* Model save location
 
-To evaluate the trained model:
+Modify these in `train/config.py`.
+
+---
+
+## 📈 Evaluation
+
+To evaluate the trained model on the validation set:
 
 ```bash
 python train/predict_inference.py
 ```
 
-The evaluation script will:
-1. Load the trained model
-2. Run inference on validation set
-3. Calculate precision, recall, F1 score, and Dice score
-4. Generate visualizations of predictions
+This will:
 
-## Inference on Single Images
+1. Load trained weights
+2. Run predictions
+3. Compute metrics (Precision, Recall, F1, Dice)
+4. Visualize sample predictions
 
-To run inference on a single image:
+---
+
+## 🖼️ Inference on a Single Image
+
+You can run inference on a single image via code or command line.
+
+### Option 1: Python Function
 
 ```python
 from train.predict_inference import visualize_single_image_prediction
 
-model_path = "best_tumor_segmentation_model.pth"
-image_path = "path/to/your/image.png"
-visualize_single_image_prediction(model_path, image_path, score_threshold=0.3)
+model_path = "weight/best_tumor_segmentation_model.pth"
+image_path = "data/val/images/Subject_60/48.png"
+visualize_single_image_prediction(model_path, image_path, score_threshold=0.5)
 ```
 
-## Results
+### Option 2: Command-Line Tool
 
-The model achieves the following performance metrics:
+```bash
+python main.py --model-path weight/best_tumor_segmentation_model.pth --image-path data/val/images/Subject_60/48.png --score-threshold 0.9
+```
 
-| Metric        | Value   |
-|---------------|---------|
-| Precision     | 0.83    |
-| Recall        | 0.61    |
-| F1 Score      | 0.70    |
-| Dice Score    | 0.70    |
+---
 
-## Visualization Examples
+## ✅ Results
 
-![Visualization Example](example_visualization.png)
+| Metric     | Value |
+| ---------- | ----- |
+| Precision  | 0.83  |
+| Recall     | 0.61  |
+| F1 Score   | 0.70  |
+| Dice Score | 0.70  |
 
-## Acknowledgments
+---
 
-- The Mask R-CNN implementation is based on torchvision's implementation
-- Dataset provided by [samamohamed29 on Kaggle](https://www.kaggle.com/datasets/samamohamed29/lungtumor)
+## 📸 Example Visualizations
+
+![Visualization](example_visualization.png)
+
+---
+
+## 🙏 Acknowledgments
+
+* Model: Based on [Torchvision’s Mask R-CNN](https://pytorch.org/vision/stable/models.html#id12)
+* Dataset: Provided by [samamohamed29 on Kaggle](https://www.kaggle.com/datasets/samamohamed29/lungtumor)
+
+

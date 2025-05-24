@@ -129,9 +129,8 @@ def visualize_single_image_prediction(model_path ,image_path, score_threshold=0.
     plt.tight_layout()
     plt.show()
 
-
-
-# Example usage
-image_path = "0.png"
-model_path = 'weights/best_tumor_segmentation_model.pth'
-visualize_single_image_prediction( model_path ,image_path,score_threshold=0.1)
+if __name__ == "__main__":
+    # Example usage
+    model_path = 'weight/best_tumor_segmentation_model.pth'  # Path to your saved model
+    image_path = 'data/val/images/Subject_60/48.png'  # Path to your test image
+    visualize_single_image_prediction(model_path, image_path, score_threshold=0.9)
