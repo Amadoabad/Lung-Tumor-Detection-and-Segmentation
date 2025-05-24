@@ -49,11 +49,27 @@ def main():
     
     if args.mode == 'infer':
         logging.info("Running in inference mode.")
-        assert args.checkpoint is not None, "Please provide --checkpoint for inference mode"
+        # assert args.checkpoint is not None, "Please provide --checkpoint for inference mode"
         assert args.input_image is not None, "Please provide --input_image for inference mode"
         
         logging.info(f"Loading model from checkpoint: {args.checkpoint}")
         model = get_model(args.model)
+        
+        if args.checkpoint is None:
+            if args.model == "unet":
+                args.checkpoint = "experiments/unet/best_unetv2.pth"
+            elif args.model == "unetpp":
+                args.checkpoint = "experiments/unet++/best_unetpp_extra(v3).pth"
+            elif args.model == "attention_unet":
+                args.checkpoint = "experiments/attention unet/best_unetattn(v2).pth"
+        else:
+            if args.model == "unet":
+                args.checkpoint = "experiments/unet/"+args.checkpoint
+            elif args.model == "unetpp":
+                args.checkpoint = "experiments/unet++/"+args.checkpoint
+            elif args.model == "attention_unet":
+                args.checkpoint = "experiments/attention unet/"+args.checkpoint                
+                
         model.load_state_dict(torch.load(args.checkpoint, map_location=args.device))
         model.to(args.device)
         model.eval()
