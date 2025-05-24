@@ -4,7 +4,7 @@ import argparse
 import os
 import torch
 import logging
-from train.utils import preprocess_image, read_image
+from train.utils import preprocess_image, read_image, visualize_segmentation_overlay
 from torchvision import transforms
 
 # Configure logging
@@ -37,7 +37,7 @@ def parse_args():
     parser.add_argument('--mode', type=str, default='infer', choices=['train', 'infer'], help='Mode: train or infer')
     parser.add_argument('--checkpoint', type=str, help='Path to the model checkpoint (.pth)')
     parser.add_argument('--input_image', type=str, help='Path to input image for inference')
-    parser.add_argument('--output_path', type=str, default='output.png', help='Path to save segmentation output')
+    parser.add_argument('--output_name', type=str, default='output.png', help='Name to save segmentation output')
     parser.add_argument('--device', type=str, default='cuda' if torch.cuda.is_available() else 'cpu')
     
     # Parse and return arguments
@@ -73,17 +73,10 @@ def main():
             output = torch.sigmoid(output)
             mask = output.squeeze().cpu().numpy()
 
-        logging.info(f"Saving output mask to: {args.output_path}")
-        plt.figure(figsize=(10, 5))
-        plt.subplot(1, 2, 1)
-        plt.title("Input Image")
-        plt.imshow(img)
-
-        plt.subplot(1, 2, 2)
-        plt.title("Predicted Mask")
-        plt.imshow(mask, cmap='gray')
-        plt.savefig(args.output_path)
-        plt.show()
+        logging.info(f"Saving output mask to: outputs/{args.output_name}")
+        
+        os.makedirs("outputs", exist_ok=True)
+        visualize_segmentation_overlay(img, mask, output_path="outputs/"+args.output_name)        
         return
 
 if __name__ == "__main__":

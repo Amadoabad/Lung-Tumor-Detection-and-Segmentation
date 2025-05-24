@@ -8,8 +8,9 @@ from torch.utils.data import DataLoader
 
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
-
+from torchvision.transforms.functional import to_pil_image
 from PIL import Image
+
 import numpy as np
 from pathlib import Path
 
@@ -179,4 +180,41 @@ def visualize_batch(images, targets, format_type="Segmentation"):
 
 
     plt.tight_layout()
+    plt.show()
+    
+def visualize_segmentation_overlay(original_image, mask, output_path=None, alpha=0.8, color=(255, 0, 0)):
+    """
+    Show original grayscale image and overlay the binary segmentation mask.
+
+    Args:
+        original_image (PIL.Image): Grayscale input image.
+        mask (np.ndarray or torch.Tensor): Binary mask (H, W).
+        output_path (str, optional): If given, save the figure to this path.
+        alpha (float): Transparency of the overlay.
+        color (tuple): RGB color to use for mask overlay.
+    """
+    if isinstance(mask, torch.Tensor):
+        mask = mask.squeeze().cpu().numpy()
+
+    # Convert grayscale PIL image to RGB
+    image_rgb = original_image.convert("RGB")
+    image_np = np.array(image_rgb)
+
+    # Make a colored mask
+    overlay = image_np.copy()
+    color_array = np.array(color, dtype=np.uint8).reshape(1, 1, 3)
+    overlay[mask == 1] = (1 - alpha) * image_np[mask == 1] + alpha * color_array
+
+    # Plot side by side
+    fig, ax = plt.subplots(1, 2, figsize=(10, 5))
+    ax[0].imshow(original_image, cmap="gray")
+    ax[0].set_title("Original Image")
+    ax[0].axis("off")
+
+    ax[1].imshow(overlay)
+    ax[1].set_title("Overlayed Segmentation")
+    ax[1].axis("off")
+
+    if output_path:
+        plt.savefig(output_path, bbox_inches="tight")
     plt.show()
