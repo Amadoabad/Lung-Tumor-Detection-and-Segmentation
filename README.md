@@ -1,6 +1,6 @@
 # Lung Tumor Detection and Segmentation using Mask R-CNN
 
-![Example Prediction](example_prediction.png)
+![Example Prediction](image.png)
 
 This repository contains a PyTorch implementation of Mask R-CNN for detecting and segmenting lung tumors in medical images. The model is trained to both localize tumors with bounding boxes and provide pixel-level segmentation masks.
 
