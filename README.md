@@ -1,7 +1,3 @@
-Here’s an **edited version** of your `README.md` that reflects the **actual directory structure** shown in your screenshot, adds **clarity**, and uses consistent formatting and filenames (e.g., `Mask_Rcnn.py` instead of `Mask-Rcnn.py`, corrects `image.png`, and includes the new `main.py` command-line tool):
-
----
-
 # 🫁 Lung Tumor Detection and Segmentation using Mask R-CNN
 
 ![Example Prediction](image.png)
