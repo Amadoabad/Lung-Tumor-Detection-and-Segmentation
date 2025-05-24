@@ -1,0 +1,6 @@
+ultralytics
+albumentations
+matplotlib
+tqdm
+Pillow
+torch

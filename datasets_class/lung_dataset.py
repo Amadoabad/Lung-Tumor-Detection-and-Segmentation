@@ -5,12 +5,23 @@ from albumentations.pytorch import ToTensorV2
 import os
 from PIL import Image
 import numpy as np
+import os
+from PIL import Image
+import torch
+from torch.utils.data import Dataset
+import torchvision.transforms as transforms
+import os
+import torch
+from torch.utils.data import Dataset
+from PIL import Image
+import numpy as np
 
+from albumentations.pytorch import ToTensorV2
 class LungDataset(Dataset):
-    def __init__(self, root_dir, transform=None, task='segmentation'):
-        self.image_dir = os.path.join(root_dir, 'images')
-        self.mask_dir = os.path.join(root_dir, 'masks')
-        self.detection_dir = os.path.join(root_dir, 'detections')
+    def __init__(self, image_dir, mask_dir, detection_dir, transform=None, task='detection'):
+        self.image_dir = image_dir
+        self.mask_dir = mask_dir
+        self.detection_dir = detection_dir
         self.transform = transform
         self.task = task  # 'detection' or 'segmentation'
 
@@ -49,7 +60,7 @@ class LungDataset(Dataset):
 
     def __getitem__(self, idx):
         record = self.data[idx]
-        image = Image.open(record['image']).convert('L')
+        image = Image.open(record['image']).convert('RGB')
         image = np.array(image)
         mask = Image.open(record['mask']).convert('L')
         mask = np.array(mask, dtype=np.float32)

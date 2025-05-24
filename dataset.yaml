@@ -1,0 +1,6 @@
+names:
+  0: object
+nc: 1
+path: C:\Users\mosta\Lung-Tumor-Detection-and-Segmentation
+train: C:\Users\mosta\Lung-Tumor-Detection-and-Segmentation\yolo_train\images
+val: C:\Users\mosta\Lung-Tumor-Detection-and-Segmentation\yolo_val\images
